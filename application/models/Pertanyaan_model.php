@@ -3,7 +3,7 @@ class Pertanyaan_model extends CI_Model
 {
     public function tampil_big_five()
     {
-        return $this->db->join('faktor','faktor.id_faktor = pertanyaan_big_five.faktor')->get('pertanyaan_big_five');
+        return $this->db->join('faktor','faktor.id_faktor = big_five.faktor')->get('big_five');
     }
     public function jawab($data,$table)
     {

@@ -51,13 +51,6 @@ class Auth extends CI_Controller
         $passwordr = $this->input->post('passwordr');
         $cek = $this->db->where('username',$username)->get('user');
 
-        if($password != $passwordr){
-            $this->session->set_flashdata('error','Password tidak sesuai!');
-            redirect('auth/register');
-        }elseif($cek->num_rows()>0){
-            $this->session->set_flashdata('error','Username telah digunakan!');
-            redirect('auth/register');
-        }else{
             $data=array(
                 'username' => $username,
                 'password' => md5($passwordr),
@@ -67,7 +60,6 @@ class Auth extends CI_Controller
             );
             $this->db->insert('user',$data);
             redirect('auth/login');
-        }
     }
 
     public function logout()

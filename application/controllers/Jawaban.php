@@ -1,14 +1,33 @@
 <?php
 class Jawaban extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        if($this->session->userdata('role') == 'pelamar'){
+            $redirect = base_url('home');
+            echo "<script>window.alert('anda tidak bisa mengakses halaman ini!'); window.location='$redirect'</script>";
+        }
+        elseif ($this->session->userdata('role') != 'admin') {
+            $this->session->set_flashdata('pesan', '<div class="fade show" style="color:red" role="alert">
+  Anda Belum Login!
+</div><br>');
+            redirect('auth/login');
+        }
+    }
+    
     public function index()
     {
         $data['jawaban']=$this->jawaban_model->tampil_jawaban();
+        $this->load->view('partials/header');
+        $this->load->view('partials/sidebar');
         $this->load->view('admin/jawaban',$data);
+        $this->load->view('partials/footer');
     }
     public function big_five(){
         $pelamar = $this->input->post('pelamar');
-        $soal = $this->db->query("SELECT * FROM pertanyaan_big_five");
+        $tgl = $this->input->post('tgl_test');
+        $soal = $this->db->query("SELECT * FROM big_five");
         foreach($soal->result() as $s){
             $skor = $this->input->post($s->id_soal);
             if(substr($skor,0,1)==1){
@@ -48,7 +67,7 @@ class Jawaban extends CI_Controller
             $total5+=$skor5[$i];
         }
         $total = [$total1,$total2,$total3,$total4,$total5];
-        echo max($total);
+        // echo max($total);
         if(max($total)==$total[0]){
             $faktor = 1;
         }
@@ -67,9 +86,117 @@ class Jawaban extends CI_Controller
         $data=array(
             'pelamar' => $pelamar,
             'faktor'  => $faktor,
-            'skor'    => max($total)
+            'tgl'     => $tgl,
+            'pjf'     => '',
+            'pof'     => '',
         );
-        $this->jawaban_model->insert($data,'jawaban');
-        redirect("jawaban");
+        $data1=array(
+            'faktor'  => $faktor,
+        );
+        $where=array(
+            'pelamar' => $pelamar,
+            'tgl'     => $tgl
+        );
+        $cek = $this->db->where('pelamar',$pelamar)->where('tgl',$tgl)->get('jawaban');
+        $this->db->trans_start();
+        if($cek->num_rows() > 0){
+            $this->jawaban_model->update($where,$data1,'jawaban');
+        }else{
+            $this->jawaban_model->insert($data,'jawaban');
+        }
+        $this->db->trans_complete();
+        redirect("home");
+    }
+
+    public function pjf(){
+        $pelamar = $this->input->post('pelamar');
+        $tgl = $this->input->post('tgl_test');
+        $soal = $this->db->get('person-job-fit');
+        foreach($soal->result() as $s){
+            $skor = $this->input->post($s->id_pjf);
+            $jumlah[] = $skor;
+        }
+        $total=0;
+        for($i=0;$i<count($jumlah);$i++){
+            $total+=$jumlah[$i];
+        }
+        if($total <= 23){
+            $pjf = "tidak sesuai";
+        }
+        if($total > 23 && $total<=39){
+            $pjf = "kurang sesuai";
+        }
+        if($total > 39 && $total <= 55){
+            $pjf = "sesuai";
+        }
+        $data=array(
+            'pelamar' => $pelamar,
+            'faktor'  => '',
+            'tgl'     => $tgl,
+            'pjf'     => $pjf,
+            'pof'     => '',
+        );
+        $data1=array(
+            'pjf'  => $pjf,
+        );
+        $where=array(
+            'pelamar' => $pelamar,
+            'tgl'     => $tgl
+        );
+        $cek = $this->db->where('pelamar',$pelamar)->where('tgl',$tgl)->get('jawaban');
+        $this->db->trans_start();
+        if($cek->num_rows() > 0){
+            $this->jawaban_model->update($where,$data1,'jawaban');
+        }else{
+            $this->jawaban_model->insert($data,'jawaban');
+        }
+        $this->db->trans_complete();
+        redirect("home");
+    }
+
+    public function pof(){
+        $pelamar = $this->input->post('pelamar');
+        $tgl = $this->input->post('tgl_test');
+        $soal = $this->db->get('person-organization-fit');
+        foreach($soal->result() as $s){
+            $skor = $this->input->post($s->id_pof);
+            $jumlah[] = $skor;
+        }
+        $total=0;
+        for($i=0;$i<count($jumlah);$i++){
+            $total+=$jumlah[$i];
+        }
+        if($total <= 23){
+            $pof = "tidak sesuai";
+        }
+        if($total > 23 && $total<=39){
+            $pof = "kurang sesuai";
+        }
+        if($total > 39 && $total <= 55){
+            $pof = "sesuai";
+        }
+        $data=array(
+            'pelamar' => $pelamar,
+            'faktor'  => '',
+            'tgl'     => $tgl,
+            'pjf'     => '',
+            'pof'     => $pof,
+        );
+        $data1=array(
+            'pof'  => $pof,
+        );
+        $where=array(
+            'pelamar' => $pelamar,
+            'tgl'     => $tgl
+        );
+        $cek = $this->db->where('pelamar',$pelamar)->where('tgl',$tgl)->get('jawaban');
+        $this->db->trans_start();
+        if($cek->num_rows() > 0){
+            $this->jawaban_model->update($where,$data1,'jawaban');
+        }else{
+            $this->jawaban_model->insert($data,'jawaban');
+        }
+        $this->db->trans_complete();
+        redirect("home");
     }
 }

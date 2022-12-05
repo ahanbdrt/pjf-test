@@ -1,7 +1,21 @@
 <?php
 class Pertanyaan extends CI_Controller
 {
-
+    public function __construct()
+    {
+        parent::__construct();
+        if($this->session->userdata('role') == 'pelamar'){
+            $redirect = base_url('home');
+            echo "<script>window.alert('anda tidak bisa mengakses halaman ini!'); window.location='$redirect'</script>";
+        }
+        elseif ($this->session->userdata('role') != 'admin') {
+            $this->session->set_flashdata('pesan', '<div class="fade show" style="color:red" role="alert">
+  Anda Belum Login!
+</div><br>');
+            redirect('auth/login');
+        }
+    }
+    
     public function pertanyaan_big5(){
         $data['big5'] = $this->pertanyaan_model->tampil_big_five();
         $data['faktor'] = $this->faktor_model->tampil_faktor();
@@ -16,7 +30,7 @@ class Pertanyaan extends CI_Controller
         $pertanyaan = $this->input->post('pertanyaan');
         $kategori =  $this->input->post('kategori');
         $faktor =  $this->input->post('faktor');
-        $jumlah = $this->db->get('pertanyaan_big_five');
+        $jumlah = $this->db->get('big_five');
         $id = $jumlah->num_rows() + 1;
 
         $data=array(
@@ -28,7 +42,7 @@ class Pertanyaan extends CI_Controller
         );
 
         $this->db->trans_start();
-        $this->pertanyaan_model->tambah($data,'pertanyaan_big_five');
+        $this->pertanyaan_model->tambah($data,'big_five');
         $this->db->trans_complete();
 
         if($this->db->trans_status() === FALSE){
@@ -54,7 +68,7 @@ class Pertanyaan extends CI_Controller
         $where=array(
             "id_soal"=>$id_soal
         );
-        $this->pertanyaan_model->update($where,$data,'pertanyaan_big_five');
+        $this->pertanyaan_model->update($where,$data,'big_five');
         redirect("pertanyaan/pertanyaan_big5");
     }
 
@@ -62,7 +76,7 @@ class Pertanyaan extends CI_Controller
     {
         $where=array('id_soal'=>$id);
         $this->db->trans_start();
-        $this->pertanyaan_model->hapus($where,'pertanyaan_big_five');
+        $this->pertanyaan_model->hapus($where,'big_five');
         $this->db->trans_complete();
 
         if($this->db->trans_status()===FALSE)

@@ -1,4 +1,4 @@
-    <title>pjf-Login</title>
+    <title>Job-App-Login</title>
 </head>
 <body style="background-image: url('<?= base_url('assets/img/psychology.jpg')?>');">
 
@@ -16,7 +16,7 @@
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Selamat Datang!</h1>
                                     </div>
                                     <div class="text-center">
                                         <?= $this->session->flashdata("pesan");?>

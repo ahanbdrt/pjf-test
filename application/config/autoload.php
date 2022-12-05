@@ -136,5 +136,7 @@ $autoload['model'] = array(
     "auth_model",
     "pertanyaan_model",
     "jawaban_model",
-    "faktor_model"
+    "faktor_model",
+    "person_job_fit_model",
+    "person_organization_fit_model",
 );

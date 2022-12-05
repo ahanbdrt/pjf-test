@@ -1,32 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jawaban</title>
+<title>Hasil Test</title>
 </head>
-<body>
-        
-    <table border="1">
-        <tr>
-            <th>No</th>
-            <th>nama pelamar</th>
-            <th>Faktor</th>
-            <th>Skor</th>
-        </tr>
-        <?php 
-        $no = 1;
-        foreach($jawaban->result() as $j){?>
-                <tr>
-                    <td><?= $no++ ?></td>
-                    <td><?= $j->username?></td>
-                    <td><?= $j->jenis_faktor?></td>
-                    <td><?= $j->skor?></td>
-                </tr>
-            <?php  }?>
-    </table>        
+<body style="background-color:lightgray">
 
-        
-</body>
-</html>
+<div class="container-fluid">
+<div class="card shadow mb-4">
+        <div class="card-header bg-light py-3">
+            <h3><b>Hasil Test:</b></h3>
+        </div>
+        <div class="card-body">
+    <div class="table-responsive">
+    <table class="table table-bordered" width="100%" id="dataTable">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Pelamar</th>
+                <th>Big Five</th>
+                <th>Person-Job-Fit</th>
+                <th>Person-Organization-Fit</th>
+                <th>Tanggal Test</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $no= 1;
+            foreach($jawaban->result() as $p){?>
+            <tr>
+                <td><?= $no++?></td>
+                <td><?= $p->fullname?></td>
+                <td><?= $p->jenis_faktor?></td>
+                <td><?= $p->pjf?></td>
+                <td><?= $p->pof?></td>
+                <td><?= $p->tgl?></td>
+            </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+    </div>
+    </div>
+</div>
+</div>
