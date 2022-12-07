@@ -14,20 +14,24 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Pertanyaan</th>
-                <th width="10%">Aksi</th>
+                <th>No. Urut</th>
+                <th>Nama</th>
+                <th>Tanggal Test</th>
+                <th width=10%>Aksi</th>
             </tr>
         </thead>
         <tbody>
             <?php
             $no= 1;
-            foreach($pjf->result() as $p){?>
+            foreach($pelamar->result() as $p){?>
             <tr>
                 <td><?= $no++?></td>
-                <td><?= $p->isi_pjf?></td>
+                <td><?= $p->username?></td>
+                <td><?= $p->fullname?></td>
+                <td><?= $p->mulai.' s/d '.$p->selesai?></td>
                 <td>
-                    <button class="btn btn-warning btn-sm ml-1 mr-1" data-toggle="modal" data-target="#editpjf" onclick="edit('<?= $p->isi_pjf?>','<?= $p->id_pjf?>')"><i class="fas fa-sm fa-edit"></i></button>
-                    <button class="btn btn-danger btn-sm ml-1" data-delete-url="<?= site_url('person_job_fit/hapus/'.$p->id_pjf) ?>" onclick="confirm(this)"><i class="fas fa-sm fa-trash"></i></button>
+                    <button class="btn btn-warning btn-sm ml-1 mr-1" data-toggle="modal" data-target="#editpjf" onclick="edit('<?= $p->user_id?>','<?= $p->fullname?>','<?= $p->tgl_test?>')"><i class="fas fa-sm fa-edit"></i></button>
+                    <button class="btn btn-danger btn-sm ml-1" data-delete-url="<?= site_url('pelamar/hapus/'.$p->user_id) ?>" onclick="confirm(this)"><i class="fas fa-sm fa-trash"></i></button>
                 </td>
             </tr>
             <?php } ?>
@@ -51,7 +55,7 @@
                 </div>
                 <form action="<?= base_url('person_job_fit/input_pjf')?>" method="post">
                 <div class="modal-body">
-                        <label>Pertanyaan</label>
+                        <label>nama</label>
                         <textarea style="height:200px" type="text" class="form-control mb-3" name="pertanyaan" placeholder="Masukkan Pertanyaan..."></textarea>
                         </div>
                         <div class="modal-footer">
@@ -70,14 +74,14 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>Tambah Person-Job-Fit</b></h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Tambah Pelamar</b></h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <form action="<?= base_url('person_job_fit/edit')?>" method="post">
                 <div class="modal-body">
-                        <label>Pertanyaan</label>
+                        <label>Nama</label>
                         <textarea style="height:200px" type="text" class="form-control mb-3" name="pertanyaan" id="isi_pjf" placeholder="Masukkan Pertanyaan..."></textarea>
                         <input type="hidden" class="form-control mb-3" name="id_pjf" id="id_pjf" placeholder="Masukkan Pertanyaan...">
                         </div>

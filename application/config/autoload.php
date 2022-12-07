@@ -139,4 +139,5 @@ $autoload['model'] = array(
     "faktor_model",
     "person_job_fit_model",
     "person_organization_fit_model",
+    "pelamar_model"
 );

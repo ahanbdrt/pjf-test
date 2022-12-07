@@ -15,21 +15,27 @@
                 <th>No</th>
                 <th>Pelamar</th>
                 <th>Big Five</th>
-                <th>Person-Job-Fit</th>
-                <th>Person-Organization-Fit</th>
+                <th>Person-Job-Fit & Person-Organization-Fit</th>
                 <th>Tanggal Test</th>
             </tr>
         </thead>
         <tbody>
             <?php
             $no= 1;
-            foreach($jawaban->result() as $p){?>
-            <tr>
+            foreach($jawaban->result() as $p){
+                $kecocokan = round(($p->pjf + $p->pof)*100 / $jumlah);
+                if($kecocokan <= 100 && $kecocokan >= 72){
+                    $kecocokan = "Sesuai";
+                }elseif($kecocokan <=71 && $kecocokan >= 43){
+                    $kecocokan ="Kurang sesuai" ;
+                }elseif($kecocokan >= 0 && $kecocokan <=42){
+                    $kecocokan ="Tidak sesuai" ;
+                }?>
+            <tr class="text-capitalize">
                 <td><?= $no++?></td>
                 <td><?= $p->fullname?></td>
                 <td><?= $p->jenis_faktor?></td>
-                <td><?= $p->pjf?></td>
-                <td><?= $p->pof?></td>
+                <td><?= $kecocokan ?></td>
                 <td><?= $p->tgl?></td>
             </tr>
             <?php } ?>

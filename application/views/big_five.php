@@ -30,7 +30,7 @@
                         <?php
                         $no = 1;
                         foreach($soal->result() as $s){?>
-                        <tr class="border-bottom border-dark">
+                        <tr class="border-bottom border-dark text-capitalize">
                             <td>
                                 <h4 class="mb-3 mt-4 text-dark"><b><?= $no++.'. '.$s->isi_soal?></b></h4>
                                 <?php if($s->kategori == "+"){?>

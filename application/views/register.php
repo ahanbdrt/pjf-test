@@ -1,7 +1,7 @@
 <title>Job-App-Register</title>
 </head>
 
-<body style="background-image: url('<?= base_url('assets/img/psychology.jpg')?>');">
+<body style="background-image: url('<?= base_url('assets/img/Psychology.jpg')?>');">
 
     <div class="container">
 
@@ -22,15 +22,19 @@
                             <div class="text-center mb-2">
                                 <span style="color:red"><?= $this->session->flashdata('error');?></span>
                             </div>
-                            <?php if($this->uri->segment(3)=='admin'){?>
-                            <form class="user" action="<?= base_url('auth/daftar')?>" method="post">
+                            <form id="user" class="user" action="<?= base_url('auth/daftar')?>" method="post">
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" name="username"
-                                        placeholder="Username" required>
+                                    <input id="nama" type="text" class="form-control form-control-user" name="fullname"
+                                        placeholder="Nama Lengkap" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" name="fullname"
-                                        placeholder="fullname" required>
+                                    <select id="tgl_test" style="font-size: 0.8rem;border-radius: 10rem;height:50px" type="select" class="form-control form-control" name="tgl_test" required>
+                                        <option hidden disabled selected value>Tanggal test</option>
+                                        <?php foreach($tgl_test->result() as $t){
+                                            if(substr(strtotime($t->mulai),0,10)>strtotime(date("Y-m-d"))){?>
+                                        <option class="form-control-user" value="<?= $t->id?>"><?= $t->mulai." s/d ".$t->selesai?></option>
+                                        <?php }} ?>
+                                    </select>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -43,30 +47,11 @@
                                     </div>
                                 </div>
                                 <input type="hidden" id="old">
-                                <button id="btn" type="submit" class="btn btn-primary btn-user btn-block">
+                                <hr>
+                                <button id="btn" onclick="loading()" disabled type="submit" class="btn btn-primary btn-user btn-block">
                                     Register Account
                                 </button>
                             </form>
-                            <?php }else{?>
-                                <form class="user" action="<?= base_url('auth/daftar')?>" method="post">
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" name="fullname"
-                                        placeholder="Nama Lengkap" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" name="no_telp"
-                                        placeholder="No. Telp" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" name="email"
-                                        placeholder="Email" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Register Account
-                                </button>
-                            </form>
-                            <?php } ?>
                             <hr>
                             <div class="text-center">
                                 <a class="small" href="<?= base_url('auth/login')?>">Already have an account? Login!</a>
@@ -84,10 +69,9 @@
         document.getElementById('old').value = document.getElementById('r_pass').value
         if(document.getElementById('r_pass').value==""){
             document.getElementById('output').innerHTML = '<input id="r_pass" onchange="validatePass()" type="password" class="form-control form-control-user" name="passwordr" placeholder="Repeat Password" required>';
-            document.getElementById('btn').disabled = false;
         }else{
         if(document.getElementById('pass').value!=document.getElementById('r_pass').value){
-            document.getElementById('output').innerHTML = '<input id="r_pass" onchange="validatePass()" type="password" class="form-control is-invalid form-control-user" name="passwordr" placeholder="Repeat Password" required>';
+            document.getElementById('output').innerHTML = '<input id="r_pass" onchange="validatePass()" type="password" class="form-control form-control-user is-invalid " name="passwordr" placeholder="Repeat Password" required>';
             document.getElementById('r_pass').value = document.getElementById('old').value;
             document.getElementById('btn').disabled = true;
         }else{
@@ -97,4 +81,10 @@
         }
     }
 }
+if(document.getElementById('nama').value != "" && document.getElementById('tgl_test').value != "" && document.getElementById('pass').value != "" && document.getElementById('r_pass').value != ""){
+    document.getElementById('btn').disabled = false;
+}
+    function loading(){
+        document.getElementById('btn').hidden = true
+    }
 </script>

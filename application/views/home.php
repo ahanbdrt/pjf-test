@@ -1,31 +1,40 @@
 <title>Job-Test</title>
 </head>
-<body style="background-color:lightgrey">
+<body onload="sesi()" style="background-color:lightgrey">
+    <?php
+    $tgl = date("Y-m-d H:i:s");
+    $id = $this->session->userdata('user_id');
+    $query = $this->db->where('user_id',$id)->join('jadwal_test','jadwal_test.id = user.tgl_test')->get('user');
+    foreach($query->result() as $q){
+        $mulai = $q->mulai;
+        $selesai = $q->selesai;
+    }
+    if($tgl>=$mulai && $tgl<=$selesai){?>
 <div class="container-fluid">
 
     <!-- DataTales Example -->
     <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
-    <div class="card shadow mb-4">
-        <div class="card-header bg-gradient-dark py-3">
-            <h3 class="text-white"><b>Home Page</b></h3>
-        </div>
-        <div class="card-body bg-light">
-            <div class="row justify-content-center">
-           <!-- Earnings (Monthly) Card Example -->
-           <?php 
-           $big5 = $this->db->get('big_five');
-           $pjf = $this->db->get('person-job-fit');
-           $pof = $this->db->get('person-organization-fit');
-           $filter = $this->db->where('pelamar',$this->session->userdata('user_id'))->get('jawaban');
-           foreach($filter->result() as $f){}
-           if(!isset($f->pof)){
-            $pof_kosong = "";
-           }elseif(isset($f->pof)){
-            $pof_kosong = $f->pof;
-           }
-           if(!isset($f->pjf)){
+        <div class="card shadow mb-4">
+            <div class="card-header bg-gradient-dark py-3">
+                <h3 class="text-white"><b>Home Page</b></h3>
+            </div>
+            <div class="card-body bg-light">
+                <div class="row justify-content-center">
+                    <!-- Earnings (Monthly) Card Example -->
+                    <?php 
+                    $big5 = $this->db->get('big_five');
+                    $pjf = $this->db->get('person-job-fit');
+                    $pof = $this->db->get('person-organization-fit');
+                    $filter = $this->db->where('pelamar',$this->session->userdata('user_id'))->get('jawaban');
+                    foreach($filter->result() as $f){}
+                    if(!isset($f->pof)){
+                        $pof_kosong = "";
+                    }elseif(isset($f->pof)){
+                        $pof_kosong = $f->pof;
+                    }
+                    if(!isset($f->pjf)){
             $pjf_kosong = "";
            }elseif(isset($f->pjf)){
             $pjf_kosong = $f->pjf;
@@ -146,3 +155,19 @@
 </div>
 </div>
 </div>
+<?php }elseif($tgl < $mulai){?>
+    <script>
+function sesi(){
+    Swal.fire({
+    title:"Peringatan!",
+    html:"Sesi akan dimulai pada:<br><b>"+"<?=$mulai?>"+"</b> sampai <b>"+"<?=$selesai?>"+"</b>",
+    icon:"warning",
+    allowOutsideClick:false,
+    }).then(response=>{
+        if(response.isConfirmed){
+            window.location = '<?= base_url("auth/logout")?>'
+        }
+    });
+}
+    </script>
+<?php } ?>

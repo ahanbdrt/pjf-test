@@ -52,7 +52,7 @@
     <hr class="sidebar-divider">
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="<?= base_url("pelamar")?>">
             <i class="fas fa-fw fa-users"></i>
             <span>Pelamar</span></a>
     </li>

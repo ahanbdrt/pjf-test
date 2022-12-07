@@ -30,7 +30,7 @@
                         <?php
                         $no = 1;
                         foreach($soal->result() as $s){?>
-                        <tr class="border-bottom border-dark">
+                        <tr class="text-capitalize border-bottom border-dark">
                             <td>
                                 <h5 class="mb-5 mt-4 text-dark"><b><?=$s->isi_pjf?></b></h5>
                                 <div class="row mb-2 ml-4 mr-4 justify-content-center">

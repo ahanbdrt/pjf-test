@@ -1,6 +1,6 @@
     <title>Job-App-Login</title>
 </head>
-<body style="background-image: url('<?= base_url('assets/img/psychology.jpg')?>');">
+<body style="background-image: url('<?= base_url('assets/img/Psychology.jpg')?>');">
 
     <div class="container">
 
@@ -25,7 +25,7 @@
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
                                                 name="username"
-                                                placeholder="Username">
+                                                placeholder="No. Urut">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
@@ -64,3 +64,37 @@
 </body>
 
 </html>
+<!-- sweetalert2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <?php if($this->session->flashdata('sukses')){?>
+    <script>
+        Swal.fire({
+            title: "Pendaftaran Berhasil",
+            icon: "success",
+            html: "<?= $this->session->flashdata('sukses')?>",
+            allowOutsideClick: false,
+        })
+	</script>
+    <?php } ?>
+
+    <?php if($this->session->flashdata('gagal')){?>
+    <script>
+        const Toast = Swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.addEventListener('mouseenter', Swal.stopTimer)
+					toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+
+			Toast.fire({
+				icon: 'error',
+				title: '<?= $this->session->flashdata('gagal') ?>'
+			})
+		</script>
+    <?php } ?>
+    </script>

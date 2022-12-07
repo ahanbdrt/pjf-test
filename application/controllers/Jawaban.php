@@ -5,7 +5,7 @@ class Jawaban extends CI_Controller
     {
         parent::__construct();
         if($this->session->userdata('role') == 'pelamar'){
-            $redirect = base_url('home');
+            $redirect = base_url('dashboard');
             echo "<script>window.alert('anda tidak bisa mengakses halaman ini!'); window.location='$redirect'</script>";
         }
         elseif ($this->session->userdata('role') != 'admin') {
@@ -17,7 +17,10 @@ class Jawaban extends CI_Controller
     }
     
     public function index()
-    {
+    {   $pjf = $this->db->get('person-job-fit')->num_rows();
+        $pof = $this->db->get('person-organization-fit')->num_rows();
+        $jumlah = ($pof + $pjf)*5;
+        $data["jumlah"] = $jumlah;
         $data['jawaban']=$this->jawaban_model->tampil_jawaban();
         $this->load->view('partials/header');
         $this->load->view('partials/sidebar');
@@ -26,7 +29,7 @@ class Jawaban extends CI_Controller
     }
     public function big_five(){
         $pelamar = $this->input->post('pelamar');
-        $tgl = $this->input->post('tgl_test');
+        $tgl = date("Y-m-d");
         $soal = $this->db->query("SELECT * FROM big_five");
         foreach($soal->result() as $s){
             $skor = $this->input->post($s->id_soal);
@@ -120,24 +123,15 @@ class Jawaban extends CI_Controller
         for($i=0;$i<count($jumlah);$i++){
             $total+=$jumlah[$i];
         }
-        if($total <= 23){
-            $pjf = "tidak sesuai";
-        }
-        if($total > 23 && $total<=39){
-            $pjf = "kurang sesuai";
-        }
-        if($total > 39 && $total <= 55){
-            $pjf = "sesuai";
-        }
         $data=array(
             'pelamar' => $pelamar,
             'faktor'  => '',
             'tgl'     => $tgl,
-            'pjf'     => $pjf,
+            'pjf'     => $total,
             'pof'     => '',
         );
         $data1=array(
-            'pjf'  => $pjf,
+            'pjf'  => $total,
         );
         $where=array(
             'pelamar' => $pelamar,
@@ -166,24 +160,15 @@ class Jawaban extends CI_Controller
         for($i=0;$i<count($jumlah);$i++){
             $total+=$jumlah[$i];
         }
-        if($total <= 23){
-            $pof = "tidak sesuai";
-        }
-        if($total > 23 && $total<=39){
-            $pof = "kurang sesuai";
-        }
-        if($total > 39 && $total <= 55){
-            $pof = "sesuai";
-        }
         $data=array(
             'pelamar' => $pelamar,
             'faktor'  => '',
             'tgl'     => $tgl,
             'pjf'     => '',
-            'pof'     => $pof,
+            'pof'     => $total,
         );
         $data1=array(
-            'pof'  => $pof,
+            'pof'  => $total,
         );
         $where=array(
             'pelamar' => $pelamar,
