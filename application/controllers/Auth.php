@@ -49,6 +49,7 @@ class Auth extends CI_Controller
     public function daftar(){
         $fullname = $this->input->post('fullname');
         $tgl_test = $this->input->post('tgl_test');
+        $email = $this->input->post('email');
         $tgl = $this->db->where('id',$tgl_test)->get('jadwal_test');
         foreach($tgl->result() as $t){
             $mulai = $t->mulai;
@@ -79,6 +80,7 @@ class Auth extends CI_Controller
         if ($password == $passwordr){
             $data=array(
                 'username' => $urutan,
+                'email'    => $email,
                 'password' => md5($passwordr),
                 'fullname' => $fullname,
                 'tgl_test'   => $tgl_test,
@@ -90,7 +92,7 @@ class Auth extends CI_Controller
             if($this->db->trans_status()===FALSE){
                 $this->session->set_flashdata('gagal', 'Pendaftaran gagal!');
             }else{
-                $this->session->set_flashdata('sukses', 'Pendaftaran akun <b>'.$fullname.'</b> berhasil<br>dengan No. urut <b>'.$urutan.'</b><br> dan Tgl tes<br><b>'.$mulai.'</b> s/d<b> '.$selesai.'</b><br><b>Mohon untuk dicatat!</b>');
+                $this->session->set_flashdata('sukses', 'Pendaftaran akun <b>'.$fullname.'</b> berhasil<br>dengan No. urut <b>'.$urutan.'</b><br> dan Tanggal tes<br><b>'.$mulai.'</b> s/d<b> '.$selesai.'</b><br><b>Mohon untuk dicatat!</b>');
             }
         }else{
             $this->session->set_flashdata('error', 'password tidak cocok!');

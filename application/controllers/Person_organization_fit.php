@@ -32,6 +32,7 @@ public function input_pof(){
             'id_pof' => $id,
             'isi_pof'=> $pertanyaan
         );
+        if($pertanyaan != null){
         $this->db->trans_start();
         $this->person_organization_fit_model->tambah($data,'person-organization-fit');
         $this->db->trans_complete();
@@ -41,7 +42,9 @@ public function input_pof(){
         }else{
             $this->session->set_flashdata('sukses', 'Pertanyaan berhasil ditambahkan!');
         }
-
+    }else{
+        $this->session->set_flashdata('peringatan', 'Mohon untuk melengkapi pertanyaan!');
+    }
         redirect('person_organization_fit');
     }
 
@@ -52,6 +55,7 @@ public function input_pof(){
         $data=array('isi_pof' =>$pertanyaan);
         $where=array('id_pof'=>$id);
 
+        if($pertanyaan != null){
         $this->db->trans_start();
         $this->person_organization_fit_model->update($where,$data,'person-organization-fit');
         $this->db->trans_complete();
@@ -61,6 +65,9 @@ public function input_pof(){
         }else{
             $this->session->set_flashdata('sukses','Pertanyaan berhasil diedit!');
         }
+    }else{
+        $this->session->set_flashdata('peringatan', 'Mohon untuk melengkapi pertanyaan!');
+    }
         redirect('person_organization_fit');
     }
 

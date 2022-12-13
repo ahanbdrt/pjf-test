@@ -33,15 +33,19 @@ class Person_job_fit extends CI_Controller
             'id_pjf' => $id,
             'isi_pjf'=> $pertanyaan
         );
+        if($pertanyaan != null){
         $this->db->trans_start();
         $this->person_job_fit_model->tambah($data,'person-job-fit');
         $this->db->trans_complete();
 
-        if($this->db->trans_status()===FALSE){
+        if($this->db->trans_status()===FALSE && $pertanyaan == ""){
             $this->session->set_flashdata('gagal', 'Pertanyaan gagal ditambahkan!');
         }else{
             $this->session->set_flashdata('sukses', 'Pertanyaan berhasil ditambahkan!');
         }
+    }else{
+        $this->session->set_flashdata('peringatan', 'Mohon untuk melengkapi pertanyaan!');
+    }
 
         redirect('person_job_fit');
     }
@@ -53,6 +57,7 @@ class Person_job_fit extends CI_Controller
         $data=array('isi_pjf' =>$pertanyaan);
         $where=array('id_pjf'=>$id);
 
+        if($pertanyaan != null){
         $this->db->trans_start();
         $this->person_job_fit_model->update($where,$data,'person-job-fit');
         $this->db->trans_complete();
@@ -62,6 +67,9 @@ class Person_job_fit extends CI_Controller
         }else{
             $this->session->set_flashdata('sukses','Pertanyaan berhasil diedit!');
         }
+    }else{
+        $this->session->set_flashdata('peringatan', 'Mohon untuk melengkapi pertanyaan!');
+    }
         redirect('person_job_fit');
     }
 

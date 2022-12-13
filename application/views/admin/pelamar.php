@@ -55,8 +55,14 @@
                 </div>
                 <form action="<?= base_url('person_job_fit/input_pjf')?>" method="post">
                 <div class="modal-body">
-                        <label>nama</label>
-                        <textarea style="height:200px" type="text" class="form-control mb-3" name="pertanyaan" placeholder="Masukkan Pertanyaan..."></textarea>
+                        <label>Nama Lengkap</label>
+                        <input type="text" class="form-control mb-3" name="pertanyaan" placeholder="Nama lengkap">
+                        <label>Alamat Email</label>
+                        <input type="text" class="form-control mb-3" name="pertanyaan" placeholder="Alamat Email">
+                        <label>Jadwal test</label>
+                        <input type="text" class="form-control mb-3" name="pertanyaan" placeholder="Alamat Email">
+                        <label>Password</label>
+                        <input type="text" class="form-control mb-3" name="pertanyaan" placeholder="Alamat Email">
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-danger" type="button" data-dismiss="modal">Batal</button>
@@ -79,10 +85,10 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form action="<?= base_url('person_job_fit/edit')?>" method="post">
+                <form action="<?= base_url('auth/daftar')?>" method="post">
                 <div class="modal-body">
                         <label>Nama</label>
-                        <textarea style="height:200px" type="text" class="form-control mb-3" name="pertanyaan" id="isi_pjf" placeholder="Masukkan Pertanyaan..."></textarea>
+                        <input type="text" class="form-control">
                         <input type="hidden" class="form-control mb-3" name="id_pjf" id="id_pjf" placeholder="Masukkan Pertanyaan...">
                         </div>
                         <div class="modal-footer">

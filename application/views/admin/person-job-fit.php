@@ -78,7 +78,7 @@
                 <form action="<?= base_url('person_job_fit/edit')?>" method="post">
                 <div class="modal-body">
                         <label>Pertanyaan</label>
-                        <textarea style="height:200px" type="text" class="form-control mb-3" name="pertanyaan" id="isi_pjf" placeholder="Masukkan Pertanyaan..."></textarea>
+                        <textarea style="height:200px" type="text" class="form-control mb-3" name="pertanyaan" id="isi_pjf" placeholder="Masukkan Pertanyaan..." required></textarea>
                         <input type="hidden" class="form-control mb-3" name="id_pjf" id="id_pjf" placeholder="Masukkan Pertanyaan...">
                         </div>
                         <div class="modal-footer">

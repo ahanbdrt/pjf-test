@@ -14,6 +14,7 @@
             <tr>
                 <th>No</th>
                 <th>Pelamar</th>
+                <th>Email</th>
                 <th>Big Five</th>
                 <th>Person-Job-Fit & Person-Organization-Fit</th>
                 <th>Tanggal Test</th>
@@ -34,6 +35,7 @@
             <tr class="text-capitalize">
                 <td><?= $no++?></td>
                 <td><?= $p->fullname?></td>
+                <td class="text-lowercase"><?= $p->email?></td>
                 <td><?= $p->jenis_faktor?></td>
                 <td><?= $kecocokan ?></td>
                 <td><?= $p->tgl?></td>

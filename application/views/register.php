@@ -28,11 +28,15 @@
                                         placeholder="Nama Lengkap" required>
                                 </div>
                                 <div class="form-group">
+                                    <input id="email" type="email" class="form-control form-control-user" name="email"
+                                        placeholder="Alamat Email" required>
+                                </div>
+                                <div class="form-group">
                                     <select id="tgl_test" style="font-size: 0.8rem;border-radius: 10rem;height:50px" type="select" class="form-control form-control" name="tgl_test" required>
                                         <option hidden disabled selected value>Tanggal test</option>
                                         <?php foreach($tgl_test->result() as $t){
-                                            if(substr(strtotime($t->mulai),0,10)>strtotime(date("Y-m-d"))){?>
-                                        <option class="form-control-user" value="<?= $t->id?>"><?= $t->mulai." s/d ".$t->selesai?></option>
+                                            if(strtotime($t->mulai)>strtotime(date("Y-m-d H:i:s"))){?>
+                                        <option form-control-user" value="<?= $t->id?>"><?= $t->mulai." s/d ".$t->selesai?></option>
                                         <?php }} ?>
                                     </select>
                                 </div>
@@ -48,8 +52,8 @@
                                 </div>
                                 <input type="hidden" id="old">
                                 <hr>
-                                <button id="btn" onclick="loading()" disabled type="submit" class="btn btn-primary btn-user btn-block">
-                                    Register Account
+                                <button id="btn" disabled type="submit" class="btn btn-primary btn-user btn-block">
+                                Lengkapi data di atas!
                                 </button>
                             </form>
                             <hr>
@@ -74,17 +78,16 @@
             document.getElementById('output').innerHTML = '<input id="r_pass" onchange="validatePass()" type="password" class="form-control form-control-user is-invalid " name="passwordr" placeholder="Repeat Password" required>';
             document.getElementById('r_pass').value = document.getElementById('old').value;
             document.getElementById('btn').disabled = true;
+            document.getElementById('btn').innerHTML = "Lengkapi data di atas!";
         }else{
             document.getElementById('output').innerHTML = '<input id="r_pass" onchange="validatePass()" type="password" class="form-control form-control-user" name="passwordr" placeholder="Repeat Password" required>';
             document.getElementById('r_pass').value = document.getElementById('pass').value
             document.getElementById('btn').disabled = false;
+            document.getElementById('btn').innerHTML = "Daftar";
         }
     }
 }
-if(document.getElementById('nama').value != "" && document.getElementById('tgl_test').value != "" && document.getElementById('pass').value != "" && document.getElementById('r_pass').value != ""){
+if(document.getElementById('nama').value != "" && document.getElementById('email').value != "" &&document.getElementById('tgl_test').value != "" && document.getElementById('pass').value != "" && document.getElementById('r_pass').value != ""){
     document.getElementById('btn').disabled = false;
 }
-    function loading(){
-        document.getElementById('btn').hidden = true
-    }
 </script>
