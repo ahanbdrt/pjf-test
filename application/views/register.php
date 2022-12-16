@@ -10,7 +10,7 @@
 
             <div class="col-xl-6 col-lg-12 col-md-9">
 
-                <div class="card o-hidden bg-gradient-light border-0 shadow-lg" style="margin-top:100px">
+                <div class="card o-hidden bg-gradient-light border-0 shadow-lg" style="margin-top:50px">
                     <div class="card-body" style="padding:60px">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
@@ -35,7 +35,7 @@
                                     <select id="tgl_test" style="font-size: 0.8rem;border-radius: 10rem;height:50px" type="select" class="form-control form-control" name="tgl_test" required>
                                         <option hidden disabled selected value>Tanggal test</option>
                                         <?php foreach($tgl_test->result() as $t){
-                                            if(strtotime($t->mulai)>strtotime(date("Y-m-d H:i:s"))){?>
+                                            if(strtotime($t->selesai)>strtotime(date("Y-m-d H:i:s"))){?>
                                         <option form-control-user" value="<?= $t->id?>"><?= $t->mulai." s/d ".$t->selesai?></option>
                                         <?php }} ?>
                                     </select>

@@ -36,7 +36,7 @@
                                 <?php if($s->kategori == "+"){?>
                                 <div class="row mb-4 ml-4 justify-content-center">
                                     <div class="ml-2">
-                                        <label class="rounded btn btn-md btn-light" style="width:164px">Sangat tidak setuju<br>
+                                        <label class="rounded btn btn-md btn-light" style="width:164px;">Sangat tidak setuju<br>
                                             <input type="radio" class="form rad" name="<?= $s->id_soal?>" value="<?= $s->faktor?>1" required>
                                         </label>
                                     </div>
@@ -98,7 +98,6 @@
                     <input type="hidden" name="tgl_test" value="<?= $this->session->userdata('tgl_test')?>">
                     <div style="display:flex; justify-content:end; margin-top:40px">
                     <button id="submit" class="btn btn-primary" style="width:250px;height:50px">Submit</button>
-                    <button id="load" style="width:250px;height:50px" class="btn btn-secondary" hidden><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden"></span></div></button>
             </form>
         </div>
     </div>

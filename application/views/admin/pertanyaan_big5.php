@@ -60,15 +60,15 @@
                 <form action="<?= base_url('pertanyaan/input_pertanyaan_big5')?>" method="post">
                 <div class="modal-body">
                         <label>Pertanyaan</label>
-                        <textarea style="height:200px" type="text" class="form-control mb-3" name="pertanyaan" placeholder="Masukkan Pertanyaan..."></textarea>
+                        <textarea style="height:200px" type="text" class="form-control mb-3" name="pertanyaan" placeholder="Masukkan Pertanyaan..." required></textarea>
                         <label>Kategori</label>
-                        <Select type="select" class="form-control mb-3" name="kategori">
+                        <Select type="select" class="form-control mb-3" name="kategori" required>
                             <option value disabled selected>Pilih Kategori</option>
                             <option value="+">Positif</option>
                             <option value="-">Negatif</option>
                         </Select>
                         <label>Faktor</label>
-                        <select type="select" class="form-control mb-3" name="faktor">
+                        <select type="select" class="form-control mb-3" name="faktor" required>
                             <option value disabled selected>Pilih Faktor</option>
                             <?php foreach($faktor->result() as $f){?>
                                 <option value="<?= $f->id_faktor?>"><?= $f->jenis_faktor ?></option>
@@ -77,8 +77,7 @@
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-danger" type="button" data-dismiss="modal">Batal</button>
-                            <button id="submittambah" style="width:75px" onclick="loading()" class="btn btn-primary" type="submit">Submit</button>
-                            <button id="loadtambah" style="width:75px" disabled class="btn btn-secondary" hidden><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden"></span></div></button>
+                            <button id="submittambah" style="width:75px" class="btn btn-primary" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
@@ -99,16 +98,16 @@
                 <form action="<?= base_url('pertanyaan/edit_pertanyaan_big5')?>" method="post">
                 <div class="modal-body">
                         <label>Pertanyaan</label>
-                        <textarea style="height:200px" type="text" id="isi_soal" class="form-control mb-3" name="pertanyaan" placeholder="Masukkan Pertanyaan..."></textarea>
+                        <textarea style="height:200px" type="text" id="isi_soal" class="form-control mb-3" name="pertanyaan" placeholder="Masukkan Pertanyaan..." required></textarea>
                         <input type="hidden" name="id_soal" id="id_soal">
                         <label>Kategori</label>
-                        <Select id="kategori" type="select" class="form-control mb-3" name="kategori">
+                        <Select id="kategori" type="select" class="form-control mb-3" name="kategori" required>
                             <option value disabled selected>Pilih Kategori</option>
                             <option value="+">Positif</option>
                             <option value="-">Negatif</option>
                         </Select>
                         <label>Faktor</label>
-                        <select id="faktor" type="select" class="form-control mb-3" name="faktor">
+                        <select id="faktor" type="select" class="form-control mb-3" name="faktor" required>
                             <option value disabled selected>Pilih Faktor</option>
                             <?php foreach($faktor->result() as $f){?>
                                 <option value="<?= $f->id_faktor?>"><?= $f->jenis_faktor ?></option>
@@ -117,8 +116,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-danger" type="button" data-dismiss="modal">Batal</button>
-                        <button id="submitedit" style="width:75px" onclick="loading()" class="btn btn-primary" type="submit">Submit</button>
-                        <button id="loadedit" style="width:75px" disabled class="btn btn-secondary" hidden><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden"></span></div></button>
+                        <button id="submitedit" style="width:75px" class="btn btn-primary" type="submit">Submit</button>
                     </div>
                 </form>
             </div>

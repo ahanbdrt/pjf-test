@@ -16,6 +16,7 @@
                 <th>No</th>
                 <th>No. Urut</th>
                 <th>Nama</th>
+                <th>Email</th>
                 <th>Tanggal Test</th>
                 <th width=10%>Aksi</th>
             </tr>
@@ -28,9 +29,10 @@
                 <td><?= $no++?></td>
                 <td><?= $p->username?></td>
                 <td><?= $p->fullname?></td>
+                <td><?= $p->email?></td>
                 <td><?= $p->mulai.' s/d '.$p->selesai?></td>
                 <td>
-                    <button class="btn btn-warning btn-sm ml-1 mr-1" data-toggle="modal" data-target="#editpjf" onclick="edit('<?= $p->user_id?>','<?= $p->fullname?>','<?= $p->tgl_test?>')"><i class="fas fa-sm fa-edit"></i></button>
+                    <button class="btn btn-warning btn-sm ml-1 mr-1" data-toggle="modal" data-target="#editbig5" onclick="edit('<?= $p->user_id?>','<?= $p->username?>','<?= $p->fullname?>','<?= $p->tgl_test?>','<?= $p->email?>','<?= $p->password?>')"><i class="fas fa-sm fa-edit"></i></button>
                     <button class="btn btn-danger btn-sm ml-1" data-delete-url="<?= site_url('pelamar/hapus/'.$p->user_id) ?>" onclick="confirm(this)"><i class="fas fa-sm fa-trash"></i></button>
                 </td>
             </tr>
@@ -48,26 +50,31 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>Tambah Person-Job-Fit</b></h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Tambah Pelamar</b></h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form action="<?= base_url('person_job_fit/input_pjf')?>" method="post">
+                <form action="<?= base_url('pelamar/daftar')?>" method="post">
                 <div class="modal-body">
                         <label>Nama Lengkap</label>
-                        <input type="text" class="form-control mb-3" name="pertanyaan" placeholder="Nama lengkap">
+                        <input type="text" class="form-control mb-3" name="fullname" placeholder="Nama lengkap" required>
                         <label>Alamat Email</label>
-                        <input type="text" class="form-control mb-3" name="pertanyaan" placeholder="Alamat Email">
+                        <input type="email" class="form-control mb-3" name="email" placeholder="Alamat Email" required>
                         <label>Jadwal test</label>
-                        <input type="text" class="form-control mb-3" name="pertanyaan" placeholder="Alamat Email">
+                        <select type="select" class="form-control mb-3" name="tgl_test" required>
+                            <option value disabled selected>Pilih tanggal test</option>
+                            <?php foreach($tgl_test->result() as $t){
+                                if(strtotime($t->mulai)>strtotime(date("Y-m-d H:i:s"))){?>
+                                <option form-control-user" value="<?= $t->id?>"><?= $t->mulai." s/d ".$t->selesai?></option>
+                            <?php }} ?>
+                        </select>
                         <label>Password</label>
-                        <input type="text" class="form-control mb-3" name="pertanyaan" placeholder="Alamat Email">
+                        <input type="password" class="form-control mb-3" name="passwordr" placeholder="Password" required>
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-danger" type="button" data-dismiss="modal">Batal</button>
-                            <button id="submittambah" onclick="loading()" class="btn btn-primary" type="submit">Submit</button>
-                            <button id="loadtambah" class="btn btn-secondary" hidden><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden"></span></div></button>
+                            <button id="submittambah" class="btn btn-primary" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
@@ -75,36 +82,64 @@
     </div>
 
     <!-- modal edit -->
-<div class="modal fade" id="editpjf" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="editbig5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>Tambah Pelamar</b></h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Edit Pelamar</b></h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form action="<?= base_url('auth/daftar')?>" method="post">
+                <form action="<?= base_url('pelamar/edit')?>" method="post">
                 <div class="modal-body">
-                        <label>Nama</label>
-                        <input type="text" class="form-control">
-                        <input type="hidden" class="form-control mb-3" name="id_pjf" id="id_pjf" placeholder="Masukkan Pertanyaan...">
+                        <label>No. Urut</label>
+                        <input type="text" id="username" readonly class="form-control mb-3" name="username" placeholder="Nomor Urut" required>
+                        <label>Nama Lengkap</label>
+                        <input type="text" id="fullname" class="form-control mb-3" name="fullname" placeholder="Nama lengkap" required>
+                        <input type="hidden" id="user_id" class="form-control mb-3" name="user_id" placeholder="Nama lengkap">
+                        <label>Alamat Email</label>
+                        <input type="email" id="email" class="form-control mb-3" name="email" placeholder="Alamat Email" required>
+                        <label>Jadwal test</label>
+                        <select type="select" class="form-control mb-3" id="tgl_test" name="tgl_test" required>
+                            <option value disabled selected>Pilih tanggal test</option>
+                            <?php foreach($tgl_test->result() as $t){
+                                if(strtotime($t->mulai)>strtotime(date("Y-m-d H:i:s"))){?>
+                                <option form-control-user" value="<?= $t->id?>"><?= $t->mulai." s/d ".$t->selesai?></option>
+                            <?php }} ?>
+                        </select>
+                        <label>Password</label><br>
+                        <span class="text-danger">biarkan kosong jika tidak ingin mengganti password!</span>
+                        <input type="password" id="password" class="form-control mb-3" name="password" placeholder="Password baru?">
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-danger" type="button" data-dismiss="modal">Batal</button>
-                            <button id="submitedit" onclick="loading()" class="btn btn-primary" type="submit">Submit</button>
-                            <button id="loadedit" class="btn btn-secondary" hidden><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden"></span></div></button>
+                            <button id="submittambah" class="btn btn-primary" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <?php if($this->session->flashdata('berhasil')){?>
+    <script>
+        Swal.fire({
+            title: "Pendaftaran Berhasil",
+            icon: "success",
+            html: "<?= $this->session->flashdata('berhasil')?>",
+            allowOutsideClick: false,
+        })
+	</script>
+    <?php } ?>
 <script>
-     function edit(isi,id){
-        document.getElementById('isi_pjf').value = isi;
-        document.getElementById('id_pjf').value = id;
+     function edit(user_id,username,fullname,tgl_test,email,password){
+        document.getElementById('user_id').value = user_id;
+        document.getElementById('username').value = username;
+        document.getElementById('fullname').value = fullname;
+        document.getElementById('tgl_test').value = tgl_test;
+        document.getElementById('email').value = email;
      }
      function loading(){
         document.getElementById('loadedit').hidden = false;

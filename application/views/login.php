@@ -9,7 +9,7 @@
 
             <div class="col-xl-6 col-lg-12 col-md-9">
 
-                <div class="card o-hidden bg-gradient-light border-0 shadow-lg" style="margin-top:100px">
+                <div class="card o-hidden bg-gradient-light border-0 shadow-lg" style="margin-top:50px">
                     <div class="card-body" style="padding:60px">
                         <!-- Nested Row within Card Body -->
                         <div class="row">

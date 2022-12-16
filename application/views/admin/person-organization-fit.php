@@ -52,12 +52,11 @@
                 <form action="<?= base_url('person_organization_fit/input_pof')?>" method="post">
                 <div class="modal-body">
                         <label>Pertanyaan</label>
-                        <textarea style="height:200px" type="text" class="form-control mb-3" name="pertanyaan" placeholder="Masukkan Pertanyaan..."></textarea>
+                        <textarea style="height:200px" type="text" class="form-control mb-3" name="pertanyaan" placeholder="Masukkan Pertanyaan..." required></textarea>
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-danger" type="button" data-dismiss="modal">Batal</button>
-                            <button id="submittambah" style="width:75px" onclick="loading()" class="btn btn-primary" type="submit">Submit</button>
-                            <button id="loadtambah" style="width:75px" disabled class="btn btn-secondary" hidden><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden"></span></div></button>
+                            <button id="submittambah" style="width:75px" class="btn btn-primary" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
@@ -70,7 +69,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>Tambah Person-organization-Fit</b></h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Edit Person-organization-Fit</b></h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -78,13 +77,12 @@
                 <form action="<?= base_url('person_organization_fit/edit')?>" method="post">
                 <div class="modal-body">
                         <label>Pertanyaan</label>
-                        <textarea style="height:200px" type="text" class="form-control mb-3" name="pertanyaan" id="isi_pof" placeholder="Masukkan Pertanyaan..."></textarea>
+                        <textarea style="height:200px" type="text" class="form-control mb-3" name="pertanyaan" id="isi_pof" placeholder="Masukkan Pertanyaan..." required></textarea>
                         <input type="hidden" class="form-control mb-3" name="id_pof" id="id_pof" placeholder="Masukkan Pertanyaan...">
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-danger" type="button" data-dismiss="modal">Batal</button>
-                            <button id="submitedit" onclick="loading()" style="width:75px" class="btn btn-primary" type="submit">Submit</button>
-                            <button id="loadedit" disabled style="width:75px" class="btn btn-secondary" hidden><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden"></span></div></button>
+                            <button id="submitedit" style="width:75px" class="btn btn-primary" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
